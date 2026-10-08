@@ -69,59 +69,18 @@
     <!-- 2/3 height: cards -->
     <main class="panel menu" id="menu">
 
-      <article class="card" data-ing="Rum,Lime,Mint,Schweppes">
-        <div class="img"><img src="img/mojito.jpg" alt=""></div>
-        <div class="strength" style="--s:30%"></div>
-        <div class="info">
-          <h3>Mojito</h3>
-          <ul>
-            <li>Rum <b>50 ml</b></li>
-            <li>Lime <b>1/2 pc</b></li>
-            <li>Mint <b>8 leaves</b></li>
-            <li>Schweppes <b>100 ml</b></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card" data-ing="Gin,Tonic,Lime,Ice">
-        <div class="img"><img src="img/gin-tonic.jpg" alt=""></div>
-        <div class="strength" style="--s:35%"></div>
-        <div class="info">
-          <h3>Gin and Tonic</h3>
-          <ul>
-            <li>Gin <b>50 ml</b></li>
-            <li>Tonic <b>150 ml</b></li>
-            <li>Lime <b>1 slice</b></li>
-            <li>Ice <b>to taste</b></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card" data-ing="Whiskey,Ice">
-        <div class="img"><img src="img/old-fashioned.jpg" alt=""></div>
-        <div class="strength" style="--s:85%"></div>
-        <div class="info">
-          <h3>Old Fashioned</h3>
-          <ul>
-            <li>Whiskey <b>60 ml</b></li>
-            <li>Ice <b>to taste</b></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card" data-ing="Rum,Cola,Lime,Ice">
-        <div class="img"><img src="img/cuba-libre.jpg" alt=""></div>
-        <div class="strength" style="--s:30%"></div>
-        <div class="info">
-          <h3>Cuba Libre</h3>
-          <ul>
-            <li>Rum <b>50 ml</b></li>
-            <li>Cola <b>120 ml</b></li>
-            <li>Lime <b>1/2 pc</b></li>
-            <li>Ice <b>to taste</b></li>
-          </ul>
-        </div>
-      </article>
+      <div class="cobweb-corner" style="position: absolute; bottom: 0; right: 0; pointer-events: none; opacity: 0.35;">
+    <svg width="250" height="250" viewBox="0 0 100 100" style="fill: none; stroke: #d4a373; stroke-width: 1.2; stroke-linecap: round;">
+      <!-- Лучи из правого нижнего угла (100, 100) -->
+      <path d="M100 100 L0 100 M100 100 L8 62 M100 100 L30 30 M100 100 L62 8 M100 100 L100 0" />
+      <!-- Дуги паутины -->
+      <path d="M100 80 Q82 82 80 100" />
+      <path d="M100 60 Q64 64 60 100" />
+      <path d="M100 40 Q46 46 40 100" />
+      <path d="M100 20 Q28 28 20 100" />
+      <path d="M100 0 Q10 10 0 100" />
+    </svg>
+  </div>
 
     </main>
   </div>
@@ -136,6 +95,24 @@ document.querySelectorAll('.item').forEach(function (el) {
     el.classList.toggle('selected'); 
   });
 });
+
+
+function showCobweb() {
+  menuContainer.innerHTML = `
+    <div class="cobweb-corner" style="position: absolute; bottom: 0; right: 0; pointer-events: none; opacity: 0.35;">
+      <svg width="250" height="250" viewBox="0 0 100 100" style="fill: none; stroke: #d4a373; stroke-width: 1.2; stroke-linecap: round;">
+        <!-- Лучи из правого нижнего угла (100, 100) -->
+        <path d="M100 100 L0 100 M100 100 L8 62 M100 100 L30 30 M100 100 L62 8 M100 100 L100 0" />
+        <!-- Дуги паутины -->
+        <path d="M100 80 Q82 82 80 100" />
+        <path d="M100 60 Q64 64 60 100" />
+        <path d="M100 40 Q46 46 40 100" />
+        <path d="M100 20 Q28 28 20 100" />
+        <path d="M100 0 Q10 10 0 100" />
+      </svg>
+    </div>
+  `;
+}
 
 // ==========================================
 // 2. МАССИВ АНЕКДОТОВ БАРМЕНА
@@ -152,7 +129,21 @@ var jokes = [
   `Заходит скелет у бар і каже:\n— Мені, будь ласка, бокал пива... і швабру.`,
   `Служба порятунку: екстрені служби. Дзвінок із бару:\n— Алло! Мій друг випив п'ять літрів пива, а потім з'їв пачку щурячої отрути! Що робити?!\n— Ну, тепер головне — не давайте йому пити воду, а то отрута розчиниться.\n— Зрозумів! А пиво ще можна?`,
   `— Бармен, налийте мне щось міцне, щоб забути про все!\n— Будь ласка, ось вам склянка незамерзайки.`,
-  `Заходить у бар чоловік без ніг і каже:\n— Бармен, налий мені щось, щоб збивало з ніг!`
+  `Заходить у бар чоловік без ніг і каже:\n— Бармен, налий мені щось, щоб збивало з ніг!`,
+  `Заходить у бар трунар і замовляє віскі:
+— Ну що, як робота?
+— Чудово, клієнти просто мертвим вантажем валять.`,
+  `— Бармен, налийте мені щось міцне, щоб забути про все!`,
+  `— Бармен, у моєму бокалі плаває муха і пищить!
+— А що ви хотіли за такі гроші, щоб вона вам там румбу танцювала?`,
+`Зустрілися двоє на вулиці:
+— Хаїме, позич дві гривні.
+— У мене з собою тільки одна.
+— Ну давай один, а другу будеш мені винен.`,
+`— Мойшо, ти знаєш, що наше життя як зебра? Смуга біла, смуга чорна...
+— Ізя, я тебе благаю! Головне — до чорної смуги встигнути продати білу фарбу!`,
+`— Офіціанте, у моєму супі плаває муха!
+— І скільки, по-вашому, може з'їсти одна маленька муха, що ви підняли такий ґвалт?`
 ];
 
 var lastJoke = -1;
@@ -196,7 +187,7 @@ bell.addEventListener('click', function () {
                                .map(function (el) { return el.dataset.name; });
 
   if (chosenIngredients.length === 0) {
-      menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Выберите хотя бы один ингредиент на полках!</p>';
+      menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Виберіть хочаб один інгрідієнт на полках!</p>';
       jokeContainer.innerText = "Hey! You can't make a drink out of thin air!";
       return;
   }
@@ -266,7 +257,7 @@ drinks.forEach(function (drink) {
 });
   })
   .catch(error => {
-      console.error('Ошибка связи с бэкендом:', error);
+      console.error('Помилка запиту до сервера', error);
       menuContainer.innerHTML = `<p style="color: #ff8888; padding: 20px; font-family: Arial;">Ошибка сервера: ${error.message}</p>`;
   });
 });
