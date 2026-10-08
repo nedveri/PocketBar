@@ -1,0 +1,23 @@
+{
+  "name": "pocketbar",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/nedveri/PocketBar#readme",
+  "bugs": {
+    "url": "https://github.com/nedveri/PocketBar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nedveri/PocketBar.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^44.7.0"
+  }
+}
