@@ -6,10 +6,10 @@ let win;
 
 function createWindow(){
     win = new BrowserWindow({
-         width: 16*50,
-         height: 9*50,
-            minWidth: 400,
-            minHeight: 300,
+         width: 16*80,
+         height: 9*80,
+            minWidth: 900,
+            minHeight: 700,
             titleBarStyle: 'hidden',
             ...(process.platform !== 'darwin' ? { 
                 titleBarOverlay: true,
@@ -22,7 +22,7 @@ function createWindow(){
     });
 
     win.loadURL(url.format({
-        pathname: path.join(__dirname, 'test.html'),
+        pathname: path.join(__dirname, 'html/index.html'),
         protocol: 'file:',
         slashes: true
     }));
