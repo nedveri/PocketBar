@@ -120,78 +120,96 @@
 </div>
 
 <script>
-  document.querySelectorAll('.item').forEach(function (el) {
-    el.addEventListener('click', function () { el.classList.toggle('selected'); });
+// 1. Выбор ингредиентов на полках
+document.querySelectorAll('.item').forEach(function (el) {
+  el.addEventListener('click', function () { 
+    el.classList.toggle('selected'); 
   });
- 
-  var bell = document.getElementById('bell');
-  bell.addEventListener('click', function () {
-    bell.classList.remove('ding');
-    void bell.offsetWidth;
-    bell.classList.add('ding');
- 
-    var chosen = Array.from(document.querySelectorAll('.item.selected'))
-                      .map(function (el) { return el.dataset.name; });
-    document.querySelectorAll('.card').forEach(function (card) {
-      var ing = card.dataset.ing.split(',');
-      card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
-    });
+});
+
+// 2. Логика отправки данных в C# бэкенд по клику на звоночек
+var bell = document.getElementById('bell');
+var menuContainer = document.getElementById('menu');
+
+bell.addEventListener('click', function () {
+  // Анимация звоночка
+  bell.classList.remove('ding');
+  void bell.offsetWidth;
+  bell.classList.add('ding');
+
+  // Собираем массив строк из выбранных ингредиентов (например: ["Lime", "Mint"])
+  var chosenIngredients = Array.from(document.querySelectorAll('.item.selected'))
+                               .map(function (el) { return el.dataset.name; });
+
+  // Если пользователь ничего не выбрал
+  if (chosenIngredients.length === 0) {
+      menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Выберите хотя бы один ингредиент на полках!</p>';
+      return;
+  }
+
+  // Делаем POST-запрос к вашему C# DrinksController
+  fetch('http://localhost:5000/api/drinks/by-ingredients', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(chosenIngredients) // Передаем массив в [FromBody] List<string> userIngredients
+  })
+  .then(response => {
+      if (!response.ok) {
+          return response.json().then(err => { throw new Error(err.message); });
+      }
+      return response.json(); // Получаем List<Drink>
+  })
+  .then(drinks => {
+      // Полностью очищаем старые статические карточки меню
+      menuContainer.innerHTML = '';
+
+      if (drinks.length === 0) {
+          menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Коктейлей с такими ингредиентами не найдено.</p>';
+          return;
+      }
+
+      // Отрисовываем новые карточки на основе данных из MongoDB
+      drinks.forEach(function (drink) {
+          
+          // Собираем список ингредиентов (C# возвращает их в массиве drink.ingredients)
+          var ingredientsHTML = '';
+          if (drink.ingredients && Array.isArray(drink.ingredients)) {
+              drink.ingredients.forEach(function(ing) {
+                  ingredientsHTML += `<li>${ing}</li>`;
+              });
+          }
+
+          // Создаем элемент карточки
+          var card = document.createElement('article');
+          card.className = 'card';
+          
+          // Сохраняем ингредиенты в data-атрибут (для совместимости с вашей версткой)
+          card.setAttribute('data-ing', drink.ingredients ? drink.ingredients.join(',') : '');
+
+          // Заполняем карточку шаблоном. 
+          // Если в базе данных нет путей картинок или крепости, используются значения по умолчанию
+          card.innerHTML = `
+            <div class="img"><img src="${drink.imagePath || 'img/default.jpg'}" alt="${drink.name}"></div>
+            <div class="strength" style="--s:${drink.strength || '30'}%"></div>
+            <div class="info">
+              <h3>${drink.name}</h3>
+              <ul>
+                ${ingredientsHTML}
+              </ul>
+            </div>
+          `;
+
+          // Добавляем готовую карточку в контейнер меню
+          menuContainer.appendChild(card);
+      });
+  })
+  .catch(error => {
+      console.error('Ошибка связи с бэкендом:', error);
+      menuContainer.innerHTML = `<p style="color: #ff8888; padding: 20px; font-family: Arial;">Ошибка сервера: ${error.message}</p>`;
   });
-
-// Функция для поиска напитков по списку ингредиентов
-function searchDrinksByIngredients(ingredientsList) {
-    // ingredientsList должен быть массивом строк, например: ['водка', 'тоник', 'лайм']
-    
-    fetch('http://localhost:5000/api/drinks/by-ingredients', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ingredientsList) // Передаем массив в C#
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw new Error(err.message); });
-        }
-        return response.json();
-    })
-    .then(drinks => {
-        console.log('Найденные напитки:', drinks);
-        // Здесь вы можете отрендерить drinks в HTML (например, через .map() или цикл)
-        displayDrinks(drinks); 
-    })
-    .catch(error => {
-        console.error('Ошибка при поиске:', error.message);
-    });
-}
-
-// Пример вызова функции (например, при нажатии на кнопку поиска):
-// searchDrinksByIngredients(['джин', 'тоник']);
-//
-// Функция для получения напитка по его уникальному ID
-function getDrinkById(drinkId) {
-    fetch(`http://localhost:5000/api/drinks/${drinkId}`)
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw new Error(err.message); });
-        }
-        return response.json();
-    })
-    .then(drink => {
-        console.log('Информация о напитке:', drink);
-        // Выводим название напитка, ингредиенты и т.д.
-        alert(`Выбран напиток: ${drink.name}`); 
-    })
-    .catch(error => {
-        console.error('Ошибка получения напитка:', error.message);
-    });
-}
-
-// Пример вызова функции:
-// getDrinkById('65cb3eef4a8b8c2d3e4f5a6b');
-
-
-
+});
 
 </script>
 

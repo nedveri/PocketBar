@@ -8,7 +8,7 @@ let cSharpProcess;
 
 function createWindow(){
 
-const backendPath = path.join(__dirname, 'MyBackend.exe');
+const backendPath = path.join(__dirname, 'back/backend.exe');
     
     cSharpProcess = execFile(backendPath, (error, stdout, stderr) => {
         if (error) {
@@ -52,8 +52,9 @@ ipcMain.on('window-close', () => {
 app.on('ready', createWindow);
 
 app.on("window-all-closed", () =>{
-    app.quit();
+    
     if(cSharpProcess) {
         cSharpProcess.kill();
     }
+    app.quit();
 })
