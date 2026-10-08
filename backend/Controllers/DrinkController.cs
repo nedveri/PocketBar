@@ -6,7 +6,7 @@ using MongoDB.Driver;
 namespace backend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/drinks")]
 public class DrinksController : ControllerBase
 {
     private readonly MongoDbClient _mongoClient;
@@ -28,7 +28,7 @@ public class DrinksController : ControllerBase
         return Ok(drink);
     }
 
-    [HttpPost("by-ingredients")]
+    [HttpPost("by-ingredients")] 
     public async Task<ActionResult<List<Drink>>> GetByIngredients([FromBody] List<string> userIngredients)
     {
         if (userIngredients == null || !userIngredients.Any())
@@ -44,8 +44,7 @@ public class DrinksController : ControllerBase
 
         var availableDrinks = allDrinks
             .Where(drink => drink.Ingredients != null
-                         && drink.Ingredients.Any()
-                         && drink.Ingredients.All(ing => userSet.Contains(ing.Trim().ToLower())))
+                         && drink.Ingredients.Any(ing => userSet.Contains(ing.Trim().ToLower())))
             .ToList();
 
         return Ok(availableDrinks);
