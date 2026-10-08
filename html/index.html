@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PocketBar</title>
+<link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Left column: 1/3 width, full height -->
+  <aside class="panel left">
+    <div class="brand">PocketBar</div>
+
+    <div class="shelves">
+      <div class="shelves-inner">
+
+        <section class="shelf">
+          <div class="shelf-row">
+            <button class="item" data-name="Lime"><span class="img"><img src="img/lime.png" alt=""></span><span class="name">Lime</span></button>
+            <button class="item" data-name="Mint"><span class="img"><img src="img/mint.png" alt=""></span><span class="name">Mint</span></button>
+            <button class="item" data-name="Schweppes"><span class="img"><img src="img/schweppes.png" alt=""></span><span class="name">Schweppes</span></button>
+            <button class="item" data-name="Lemon"><span class="img"><img src="img/lemon.png" alt=""></span><span class="name">Lemon</span></button>
+            <button class="item" data-name="Tonic"><span class="img"><img src="img/tonic.png" alt=""></span><span class="name">Tonic</span></button>
+            <button class="item" data-name="Cola"><span class="img"><img src="img/cola.png" alt=""></span><span class="name">Cola</span></button>
+            <button class="item" data-name="Ice"><span class="img"><img src="img/ice.png" alt=""></span><span class="name">Ice</span></button>
+          </div>
+        </section>
+
+        <section class="shelf">
+          <div class="shelf-row">
+            <button class="item" data-name="Vodka"><span class="img"><img src="img/vodka.png" alt=""></span><span class="name">Vodka</span></button>
+            <button class="item" data-name="Gin"><span class="img"><img src="img/gin.png" alt=""></span><span class="name">Gin</span></button>
+            <button class="item" data-name="Rum"><span class="img"><img src="img/rum.png" alt=""></span><span class="name">Rum</span></button>
+            <button class="item" data-name="Tequila"><span class="img"><img src="img/tequila.png" alt=""></span><span class="name">Tequila</span></button>
+            <button class="item" data-name="Whiskey"><span class="img"><img src="img/whiskey.png" alt=""></span><span class="name">Whiskey</span></button>
+            <button class="item" data-name="Vermouth"><span class="img"><img src="img/vermouth.png" alt=""></span><span class="name">Vermouth</span></button>
+            <button class="item" data-name="Liqueur"><span class="img"><img src="img/liqueur.png" alt=""></span><span class="name">Liqueur</span></button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right column: 2/3 width -->
+  <div class="right">
+
+    <!-- 1/3 height: bell and bartender -->
+    <section class="panel counter">
+      <button class="bell" id="bell" aria-label="Search cocktails">
+        <img src="img/bell.png" alt="">
+      </button>
+      <div class="bartender">
+        <img src="img/bartender.png" alt="">
+      </div>
+    </section>
+
+    <!-- 2/3 height: cards -->
+    <main class="panel menu" id="menu">
+
+      <article class="card" data-ing="Rum,Lime,Mint,Schweppes">
+        <div class="img"><img src="img/mojito.jpg" alt=""></div>
+        <div class="strength" style="--s:30%"></div>
+        <div class="info">
+          <h3>Mojito</h3>
+          <ul>
+            <li>Rum <b>50 ml</b></li>
+            <li>Lime <b>1/2 pc</b></li>
+            <li>Mint <b>8 leaves</b></li>
+            <li>Schweppes <b>100 ml</b></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card" data-ing="Gin,Tonic,Lime,Ice">
+        <div class="img"><img src="img/gin-tonic.jpg" alt=""></div>
+        <div class="strength" style="--s:35%"></div>
+        <div class="info">
+          <h3>Gin and Tonic</h3>
+          <ul>
+            <li>Gin <b>50 ml</b></li>
+            <li>Tonic <b>150 ml</b></li>
+            <li>Lime <b>1 slice</b></li>
+            <li>Ice <b>to taste</b></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card" data-ing="Whiskey,Ice">
+        <div class="img"><img src="img/old-fashioned.jpg" alt=""></div>
+        <div class="strength" style="--s:85%"></div>
+        <div class="info">
+          <h3>Old Fashioned</h3>
+          <ul>
+            <li>Whiskey <b>60 ml</b></li>
+            <li>Ice <b>to taste</b></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card" data-ing="Rum,Cola,Lime,Ice">
+        <div class="img"><img src="img/cuba-libre.jpg" alt=""></div>
+        <div class="strength" style="--s:30%"></div>
+        <div class="info">
+          <h3>Cuba Libre</h3>
+          <ul>
+            <li>Rum <b>50 ml</b></li>
+            <li>Cola <b>120 ml</b></li>
+            <li>Lime <b>1/2 pc</b></li>
+            <li>Ice <b>to taste</b></li>
+          </ul>
+        </div>
+      </article>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.item').forEach(function (el) {
+    el.addEventListener('click', function () { el.classList.toggle('selected'); });
+  });
+
+  var bell = document.getElementById('bell');
+  bell.addEventListener('click', function () {
+    bell.classList.remove('ding');
+    void bell.offsetWidth;
+    bell.classList.add('ding');
+
+    var chosen = Array.from(document.querySelectorAll('.item.selected'))
+                      .map(function (el) { return el.dataset.name; });
+    document.querySelectorAll('.card').forEach(function (card) {
+      var ing = card.dataset.ing.split(',');
+      card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
+    });
+  });
+</script>
+</body>
+</html>
