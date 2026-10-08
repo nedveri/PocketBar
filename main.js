@@ -1,12 +1,23 @@
 const url = require('url');
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
-const childProcess = require('child_process');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const { execFile } = require('child_process'); 
 
 let win;
 let cSharpProcess;
 
 function createWindow(){
+
+const backendPath = path.join(__dirname, 'MyBackend.exe');
+    
+    cSharpProcess = execFile(backendPath, (error, stdout, stderr) => {
+        if (error) {
+            console.error('Ошибка запуска C# бэкенда:', error);
+        }
+    });
+
+
+
     win = new BrowserWindow({
          width: 16*80,
          height: 9*80,
@@ -30,8 +41,19 @@ function createWindow(){
     }));
 }
 
+ipcMain.on('window-minimize', () => {
+    if (win) win.minimize();
+});
+
+ipcMain.on('window-close', () => {
+    if (win) win.close();
+});
+
 app.on('ready', createWindow);
 
 app.on("window-all-closed", () =>{
     app.quit();
+    if(cSharpProcess) {
+        cSharpProcess.kill();
+    }
 })

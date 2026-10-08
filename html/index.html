@@ -137,6 +137,62 @@
       card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
     });
   });
+
+// Функция для поиска напитков по списку ингредиентов
+function searchDrinksByIngredients(ingredientsList) {
+    // ingredientsList должен быть массивом строк, например: ['водка', 'тоник', 'лайм']
+    
+    fetch('http://localhost:5000/api/drinks/by-ingredients', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ingredientsList) // Передаем массив в C#
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.message); });
+        }
+        return response.json();
+    })
+    .then(drinks => {
+        console.log('Найденные напитки:', drinks);
+        // Здесь вы можете отрендерить drinks в HTML (например, через .map() или цикл)
+        displayDrinks(drinks); 
+    })
+    .catch(error => {
+        console.error('Ошибка при поиске:', error.message);
+    });
+}
+
+// Пример вызова функции (например, при нажатии на кнопку поиска):
+// searchDrinksByIngredients(['джин', 'тоник']);
+//
+// Функция для получения напитка по его уникальному ID
+function getDrinkById(drinkId) {
+    fetch(`http://localhost:5000/api/drinks/${drinkId}`)
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.message); });
+        }
+        return response.json();
+    })
+    .then(drink => {
+        console.log('Информация о напитке:', drink);
+        // Выводим название напитка, ингредиенты и т.д.
+        alert(`Выбран напиток: ${drink.name}`); 
+    })
+    .catch(error => {
+        console.error('Ошибка получения напитка:', error.message);
+    });
+}
+
+// Пример вызова функции:
+// getDrinkById('65cb3eef4a8b8c2d3e4f5a6b');
+
+
+
+
 </script>
 
 </body>
