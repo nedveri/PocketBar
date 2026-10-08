@@ -123,13 +123,13 @@
   document.querySelectorAll('.item').forEach(function (el) {
     el.addEventListener('click', function () { el.classList.toggle('selected'); });
   });
-
+ 
   var bell = document.getElementById('bell');
   bell.addEventListener('click', function () {
     bell.classList.remove('ding');
     void bell.offsetWidth;
     bell.classList.add('ding');
-
+ 
     var chosen = Array.from(document.querySelectorAll('.item.selected'))
                       .map(function (el) { return el.dataset.name; });
     document.querySelectorAll('.card').forEach(function (card) {
@@ -138,5 +138,6 @@
     });
   });
 </script>
+
 </body>
 </html>

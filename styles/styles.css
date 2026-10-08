@@ -119,7 +119,7 @@ body {
   background:
     linear-gradient(rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 30%),   /* top edge highlight */
     linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3)),                    /* depth shading */
-    url("../imgs/oak_texture.jpg") left center / var(--oak-size) auto repeat-x;
+    url("../imgs/oak_texture.png") left center / var(--oak-size) auto repeat-x;
   box-shadow: 0 10px 16px -6px rgba(0, 0, 0, .55);
   pointer-events: none;
 }
@@ -194,21 +194,30 @@ body {
   justify-content: space-between;
   padding: 0 clamp(20px, 5vw, 70px);
   overflow: hidden;
-  background: var(--wood-1) url("../imgs/bar_counter.jpg") center bottom / cover no-repeat;   /* bar counter image */
+  background:
+    radial-gradient(600px 220px at 70% 0%, rgba(199, 54, 74, .35), transparent 70%),
+    linear-gradient(120deg, #5a121d, #2a0a10);                       /* wall behind the bar */
+  --top: clamp(40px, 8vh, 90px);                                        /* counter top height */
 }
-.counter::before {                 /* counter top */
+ 
+/* Counter top = bar_counter.jpg, sits in front of the bartender */
+.counter::before {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 18%;
-  background: linear-gradient(var(--wood-3), #2e1a10);
-  border-top: 1px solid rgba(255, 255, 255, .1);
+  height: var(--top);
+  z-index: 2;
+  background: #3a2314 url("../imgs/bar_counter.jpg") center / cover no-repeat;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  box-shadow: 0 -8px 18px rgba(0, 0, 0, .4);
 }
  
 .bell {
   position: relative;
-  z-index: 1;
-  height: 78%;
+  z-index: 3;
+  align-self: flex-end;
+  height: 62%;
+  margin-bottom: calc(var(--top) * .35);   /* base stands on the counter top, not above it */
   aspect-ratio: 1 / 1;
   padding: 0;
   background: none;
