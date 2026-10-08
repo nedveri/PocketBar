@@ -53,8 +53,10 @@
       <button class="bell" id="bell" aria-label="Search cocktails">
         <img src="../imgs/bell.png" alt="">
       </button>
-            <div class="bubble" id="bubble" aria-live="polite">
-        <p id="joke"></p>
+      
+      <!-- Область реплик бармена -->
+      <div class="bubble" id="bubble" aria-live="polite">
+        <p id="joke">Welcome to PocketBar! Pick your ingredients.</p>
       </div>
 
       <div class="bartender">
@@ -134,6 +136,7 @@ document.querySelectorAll('.item').forEach(function (el) {
 // 2. Логика отправки данных в C# бэкенд по клику на звоночек
 var bell = document.getElementById('bell');
 var menuContainer = document.getElementById('menu');
+var jokeContainer = document.getElementById('joke');
 
 bell.addEventListener('click', function () {
   // Анимация звоночка
@@ -141,15 +144,17 @@ bell.addEventListener('click', function () {
   void bell.offsetWidth;
   bell.classList.add('ding');
 
-  // Собираем массив строк из выбранных ингредиентов (например: ["Lime", "Mint"])
+  // Собираем массив выбранных ингредиентов
   var chosenIngredients = Array.from(document.querySelectorAll('.item.selected'))
                                .map(function (el) { return el.dataset.name; });
 
-  // Если пользователь ничего не выбрал
   if (chosenIngredients.length === 0) {
       menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Выберите хотя бы один ингредиент на полках!</p>';
+      jokeContainer.innerText = "Hey! You can't make a drink out of thin air!";
       return;
   }
+
+  jokeContainer.innerText = "Mixology in progress... Let me check the cellar.";
 
   // Делаем POST-запрос к вашему C# DrinksController
   fetch('http://localhost:5000/api/drinks/by-ingredients', {
@@ -157,27 +162,27 @@ bell.addEventListener('click', function () {
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify(chosenIngredients) // Передаем массив в [FromBody] List<string> userIngredients
+      body: JSON.stringify(chosenIngredients)
   })
   .then(response => {
       if (!response.ok) {
           return response.json().then(err => { throw new Error(err.message); });
       }
-      return response.json(); // Получаем List<Drink>
+      return response.json();
   })
   .then(drinks => {
-      // Полностью очищаем старые статические карточки меню
       menuContainer.innerHTML = '';
 
       if (drinks.length === 0) {
           menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Коктейлей с такими ингредиентами не найдено.</p>';
+          jokeContainer.innerText = "Sorry pal, never heard of that combo.";
           return;
       }
 
+      //jokeContainer.innerText = "Here's what I can whip up for you!";
+
       // Отрисовываем новые карточки на основе данных из MongoDB
       drinks.forEach(function (drink) {
-          
-          // Собираем список ингредиентов (C# возвращает их в массиве drink.ingredients)
           var ingredientsHTML = '';
           if (drink.ingredients && Array.isArray(drink.ingredients)) {
               drink.ingredients.forEach(function(ing) {
@@ -185,15 +190,10 @@ bell.addEventListener('click', function () {
               });
           }
 
-          // Создаем элемент карточки
           var card = document.createElement('article');
           card.className = 'card';
-          
-          // Сохраняем ингредиенты в data-атрибут (для совместимости с вашей версткой)
           card.setAttribute('data-ing', drink.ingredients ? drink.ingredients.join(',') : '');
 
-          // Заполняем карточку шаблоном. 
-          // Если в базе данных нет путей картинок или крепости, используются значения по умолчанию
           card.innerHTML = `
             <div class="img"><img src="${drink.imagePath || 'img/default.jpg'}" alt="${drink.name}"></div>
             <div class="strength" style="--s:${drink.strength || '30'}%"></div>
@@ -204,16 +204,17 @@ bell.addEventListener('click', function () {
               </ul>
             </div>
           `;
-
-          // Добавляем готовую карточку в контейнер меню
           menuContainer.appendChild(card);
       });
   })
   .catch(error => {
       console.error('Ошибка связи с бэкендом:', error);
       menuContainer.innerHTML = `<p style="color: #ff8888; padding: 20px; font-family: Arial;">Ошибка сервера: ${error.message}</p>`;
- 
-  // ---- Jokes: fill this array yourself ----
+      jokeContainer.innerText = "Uh oh... looks like the bar's backend server tripped!";
+  });
+});
+
+// ---- Jokes: fill this array yourself ----
   var jokes = [
     `Коханка одяглася, зачісується біля дзеркала і питає чоловіка:
 — А твоя дружина теж гарна?
@@ -274,11 +275,8 @@ bell.addEventListener('click', function () {
       card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
     });
   });
-});
 
 </script>
-
-
 
 </body>
 </html>
