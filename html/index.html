@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PocketBar</title>
-<link rel="stylesheet" href="../styles/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PocketBar</title>
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
 
@@ -51,10 +51,10 @@
     <!-- 1/3 height: bell and bartender -->
     <section class="panel counter">
       <button class="bell" id="bell" aria-label="Search cocktails">
-        <img src="img/bell.png" alt="">
+        <img src="../imgs/bell.png" alt="">
       </button>
       <div class="bartender">
-        <img src="img/bartender.png" alt="">
+        <img src="../imgs/bartender.png" alt="">
       </div>
     </section>
 
@@ -123,13 +123,13 @@
   document.querySelectorAll('.item').forEach(function (el) {
     el.addEventListener('click', function () { el.classList.toggle('selected'); });
   });
-
+ 
   var bell = document.getElementById('bell');
   bell.addEventListener('click', function () {
     bell.classList.remove('ding');
     void bell.offsetWidth;
     bell.classList.add('ding');
-
+ 
     var chosen = Array.from(document.querySelectorAll('.item.selected'))
                       .map(function (el) { return el.dataset.name; });
     document.querySelectorAll('.card').forEach(function (card) {
@@ -138,5 +138,6 @@
     });
   });
 </script>
+
 </body>
 </html>
