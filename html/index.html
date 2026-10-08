@@ -53,6 +53,10 @@
       <button class="bell" id="bell" aria-label="Search cocktails">
         <img src="../imgs/bell.png" alt="">
       </button>
+            <div class="bubble" id="bubble" aria-live="polite">
+        <p id="joke"></p>
+      </div>
+
       <div class="bartender">
         <img src="../imgs/bartender.png" alt="">
       </div>
@@ -208,10 +212,73 @@ bell.addEventListener('click', function () {
   .catch(error => {
       console.error('Ошибка связи с бэкендом:', error);
       menuContainer.innerHTML = `<p style="color: #ff8888; padding: 20px; font-family: Arial;">Ошибка сервера: ${error.message}</p>`;
+ 
+  // ---- Jokes: fill this array yourself ----
+  var jokes = [
+    `Коханка одяглася, зачісується біля дзеркала і питає чоловіка:
+— А твоя дружина теж гарна?
+— Та ні, така сама...`,
+`— Мій брат Моня може пробігти 100 метрів за вісім секунд.
+— Брехня! Світовий рекорд у бігу на стометрівку – дев'ять секунд.
+— Ну то й шо?! Моня знає короткий шлях!`,
+`Заходить равлик у бар і каже:
+— Келих пива, будь ласка.
+Бармен бере її і викидає за двері. Минає рік. Равлик знову заповзає до бару:
+— І що це було?!`,
+`– Алло, це лінія допомоги алкоголікам?
+– Так.
+– Підкажіть як зробити мохіто!`,
+`Заходять два дракони у бар. Один каже:
+— Щось тут жарко...
+А другий йому відповідає:
+— А ти писка закрий.`,
+
+
+ 
+    // Add the next joke here, separated by a comma. Each new line inside backticks = a new line in the bubble.
+  ];
+ 
+  var bell = document.getElementById('bell');
+  var bubble = document.getElementById('bubble');
+  var jokeEl = document.getElementById('joke');
+  var lastJoke = -1;
+ 
+  function showJoke() {
+    if (!jokes.length) {                             // array is empty: show a hint so it is clear the bubble works
+      jokeEl.textContent = 'No jokes yet. Add them to the "jokes" array in the script.';
+      bubble.classList.add('show');
+      return;
+    }
+    var i;
+    do { i = Math.floor(Math.random() * jokes.length); }
+    while (jokes.length > 1 && i === lastJoke);      // never repeat the same joke twice in a row
+    lastJoke = i;
+ 
+    bubble.classList.remove('show');
+    void bubble.offsetWidth;                         // restart the pop animation
+    jokeEl.textContent = jokes[i];
+    bubble.classList.add('show');
+  }
+ 
+  bell.addEventListener('click', function () {
+    bell.classList.remove('ding');
+    void bell.offsetWidth;
+    bell.classList.add('ding');
+ 
+    showJoke();
+ 
+    var chosen = Array.from(document.querySelectorAll('.item.selected'))
+                      .map(function (el) { return el.dataset.name; });
+    document.querySelectorAll('.card').forEach(function (card) {
+      var ing = card.dataset.ing.split(',');
+      card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
+    });
   });
 });
 
 </script>
+
+
 
 </body>
 </html>
