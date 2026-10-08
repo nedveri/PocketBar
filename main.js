@@ -1,8 +1,10 @@
 const url = require('url');
 const path = require('path');
 const { app, BrowserWindow } = require('electron');
+const childProcess = require('child_process');
 
 let win;
+let cSharpProcess;
 
 function createWindow(){
     win = new BrowserWindow({
