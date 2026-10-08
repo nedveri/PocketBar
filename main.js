@@ -16,8 +16,6 @@ const backendPath = path.join(__dirname, 'back/backend.exe');
         }
     });
 
-
-
     win = new BrowserWindow({
          width: 16*80,
          height: 9*80,
