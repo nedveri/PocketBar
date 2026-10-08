@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Electron\\PocketBar\\backend\\backend.csproj": {}
+    "D:\\kakaton\\PocketBar\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Electron\\PocketBar\\backend\\backend.csproj": {
+    "D:\\kakaton\\PocketBar\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Electron\\PocketBar\\backend\\backend.csproj",
+        "projectUniqueName": "D:\\kakaton\\PocketBar\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Electron\\PocketBar\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\kirri\\.nuget\\packages\\",
-        "outputPath": "C:\\Electron\\PocketBar\\backend\\obj\\",
+        "projectPath": "D:\\kakaton\\PocketBar\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\arthas\\.nuget\\packages\\",
+        "outputPath": "D:\\kakaton\\PocketBar\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kirri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\arthas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -56,12 +56,6 @@
               "target": "Package",
               "version": "[10.0.12, )"
             },
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.12, )",
-              "autoReferenced": true
-            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.12.0, )"
@@ -78,20 +72,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[10.0.12, 10.0.12]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[10.0.12, 10.0.12]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[10.0.12, 10.0.12]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -515,11 +495,6 @@
             "System.Xml.XPath": "(,4.3.32767]",
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
         }
       }
     }
