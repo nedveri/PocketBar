@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PocketBar</title>
+    <!-- Разрешаем загрузку картинок с любых сайтов (https:) и локально (file:) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' http://localhost:5000; img-src 'self' data: https: file:;">
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
@@ -19,25 +21,25 @@
 
         <section class="shelf">
           <div class="shelf-row">
-            <button class="item" data-name="Lime"><span class="img"><img src="img/lime.png" alt=""></span><span class="name">Lime</span></button>
-            <button class="item" data-name="Mint"><span class="img"><img src="img/mint.png" alt=""></span><span class="name">Mint</span></button>
-            <button class="item" data-name="Schweppes"><span class="img"><img src="img/schweppes.png" alt=""></span><span class="name">Schweppes</span></button>
-            <button class="item" data-name="Lemon"><span class="img"><img src="img/lemon.png" alt=""></span><span class="name">Lemon</span></button>
-            <button class="item" data-name="Tonic"><span class="img"><img src="img/tonic.png" alt=""></span><span class="name">Tonic</span></button>
-            <button class="item" data-name="Cola"><span class="img"><img src="img/cola.png" alt=""></span><span class="name">Cola</span></button>
-            <button class="item" data-name="Ice"><span class="img"><img src="img/ice.png" alt=""></span><span class="name">Ice</span></button>
+            <button class="item" data-name="Lime"><span class="img"><img src="../imgs/ingredients/lime.png" alt=""></span><span class="name">Lime</span></button>
+            <button class="item" data-name="Mint"><span class="img"><img src="../imgs/ingredients/mint.png" alt=""></span><span class="name">Mint</span></button>
+            <button class="item" data-name="Schweppes"><span class="img"><img src="../imgs/ingredients/schweppes.webp" alt=""></span><span class="name">Schweppes</span></button>
+            <button class="item" data-name="Lemon"><span class="img"><img src="../imgs/ingredients/lemon.png" alt=""></span><span class="name">Lemon</span></button>
+            <button class="item" data-name="Tonic"><span class="img"><img src="../imgs/ingredients/tonic.png" alt=""></span><span class="name">Tonic</span></button>
+            <button class="item" data-name="Cola"><span class="img"><img src="../imgs/ingredients/cola.png" alt=""></span><span class="name">Cola</span></button>
+            <button class="item" data-name="Ice"><span class="img"><img src="../imgs/ingredients/ice.png" alt=""></span><span class="name">Ice</span></button>
           </div>
         </section>
 
         <section class="shelf">
           <div class="shelf-row">
-            <button class="item" data-name="Vodka"><span class="img"><img src="img/vodka.png" alt=""></span><span class="name">Vodka</span></button>
-            <button class="item" data-name="Gin"><span class="img"><img src="img/gin.png" alt=""></span><span class="name">Gin</span></button>
-            <button class="item" data-name="Rum"><span class="img"><img src="img/rum.png" alt=""></span><span class="name">Rum</span></button>
-            <button class="item" data-name="Tequila"><span class="img"><img src="img/tequila.png" alt=""></span><span class="name">Tequila</span></button>
-            <button class="item" data-name="Whiskey"><span class="img"><img src="img/whiskey.png" alt=""></span><span class="name">Whiskey</span></button>
-            <button class="item" data-name="Vermouth"><span class="img"><img src="img/vermouth.png" alt=""></span><span class="name">Vermouth</span></button>
-            <button class="item" data-name="Liqueur"><span class="img"><img src="img/liqueur.png" alt=""></span><span class="name">Liqueur</span></button>
+            <button class="item" data-name="Vodka"><span class="img"><img src="../imgs/ingredients/vodka.webp" alt=""></span><span class="name">Vodka</span></button>
+            <button class="item" data-name="Gin"><span class="img"><img src="../imgs/ingredients/gin.png" alt=""></span><span class="name">Gin</span></button>
+            <button class="item" data-name="Rum"><span class="img"><img src="../imgs/ingredients/rum.png" alt=""></span><span class="name">Rum</span></button>
+            <button class="item" data-name="Tequila"><span class="img"><img src="../imgs/ingredients/tequila.png" alt=""></span><span class="name">Tequila</span></button>
+            <button class="item" data-name="Whiskey"><span class="img"><img src="../imgs/ingredients/whisky.png" alt=""></span><span class="name">Whiskey</span></button>
+            <button class="item" data-name="Vermouth"><span class="img"><img src="../imgs/ingredients/martini.webp" alt=""></span><span class="name">Vermouth</span></button>
+            <button class="item" data-name="Liqueur"><span class="img"><img src="../imgs/ingredients/liqueur.webp" alt=""></span><span class="name">Liqueur</span></button>
           </div>
         </section>
 
@@ -126,25 +128,70 @@
 </div>
 
 <script>
-// 1. Выбор ингредиентов на полках
+// ==========================================
+// 1. ВЫБОР ИНГРЕДИЕНТОВ НА ПОЛКАХ (БАР)
+// ==========================================
 document.querySelectorAll('.item').forEach(function (el) {
   el.addEventListener('click', function () { 
     el.classList.toggle('selected'); 
   });
 });
 
-// 2. Логика отправки данных в C# бэкенд по клику на звоночек
+// ==========================================
+// 2. МАССИВ АНЕКДОТОВ БАРМЕНА
+// ==========================================
+var jokes = [
+  `Коханка одяглася, зачісується біля дзеркала і питає чоловіка:\n— А твоя дружина теж гарна?\n— Та ні, така сама...`,
+  `— Мій брат Моня може пробігти 100 метрів за вісім секунд.\n— Брехня! Світовий рекорд у бігу на стометрівку – дев'ять секунд.\n— Ну то й шо?! Моня знає короткий шлях!`,
+  `Заходить равлик у бар і каже:\n— Келих пива, будь ласка.\n— Бармен бере її і викидає за двері. Минає рік. Равлик знову заповзає до бару:\n— І що це було?!`,
+  `– Алло, це лінія допомоги алкоголікам?\n– Так.\n– Підкажіть як зробити мохіто!`,
+  `Заходять два дракони у бар. Один каже:\n— Щось тут жарко...\nА другий йому відповідає:\n— А ти писка закрий.`,
+  `Бормен так сильно звик до своєї роботи, що коли вдома дружина запитала його: «Коханий, ти мене любиш?», він на автоматі відповів:\n— Паспорт покажіть спочатку.`,
+  `Бармен звертається до відвідувача, який щойно забіг:\n— Вітаю! Що бажаєте: пиво чи горілку?\n— Немає часу на розгойдування, давай горілку!`,
+  `Бармен помічає сумного клієнта за стійкою:\n— О, я бачу, що у вас склянка вже порожня. Бажаєте ще одну?\n— А навіщо мені дві порожні склянки?`,
+  `Заходит скелет у бар і каже:\n— Мені, будь ласка, бокал пива... і швабру.`,
+  `Служба порятунку: екстрені служби. Дзвінок із бару:\n— Алло! Мій друг випив п'ять літрів пива, а потім з'їв пачку щурячої отрути! Що робити?!\n— Ну, тепер головне — не давайте йому пити воду, а то отрута розчиниться.\n— Зрозумів! А пиво ще можна?`,
+  `— Бармен, налийте мне щось міцне, щоб забути про все!\n— Будь ласка, ось вам склянка незамерзайки.`,
+  `Заходить у бар чоловік без ніг і каже:\n— Бармен, налий мені щось, щоб збивало з ніг!`
+];
+
+var lastJoke = -1;
 var bell = document.getElementById('bell');
 var menuContainer = document.getElementById('menu');
+var bubble = document.getElementById('bubble');
 var jokeContainer = document.getElementById('joke');
 
+// Функция показа случайной шутки бармена
+function showJoke() {
+  if (!jokes.length) {
+    jokeContainer.textContent = 'No jokes yet.';
+    bubble.classList.add('show');
+    return;
+  }
+  var i;
+  do { i = Math.floor(Math.random() * jokes.length); }
+  while (jokes.length > 1 && i === lastJoke);
+  lastJoke = i;
+
+  bubble.classList.remove('show');
+  void bubble.offsetWidth; // Перезапуск CSS-анимации всплывающего облачка
+  jokeContainer.textContent = jokes[i];
+  bubble.classList.add('show');
+}
+
+// ==========================================
+// 3. ЕДИНЫЙ ОБРАБОТЧИК КЛИКА НА ЗВОНОЧЕК
+// ==========================================
 bell.addEventListener('click', function () {
   // Анимация звоночка
   bell.classList.remove('ding');
   void bell.offsetWidth;
   bell.classList.add('ding');
 
-  // Собираем массив выбранных ингредиентов
+  // Показываем шутку бармена
+  showJoke();
+
+  // Собираем выбранные ингредиенты
   var chosenIngredients = Array.from(document.querySelectorAll('.item.selected'))
                                .map(function (el) { return el.dataset.name; });
 
@@ -154,9 +201,7 @@ bell.addEventListener('click', function () {
       return;
   }
 
-  jokeContainer.innerText = "Mixology in progress... Let me check the cellar.";
-
-  // Делаем POST-запрос к вашему C# DrinksController
+  // Запрос к вашему C# DrinksController
   fetch('http://localhost:5000/api/drinks/by-ingredients', {
       method: 'POST',
       headers: {
@@ -175,108 +220,58 @@ bell.addEventListener('click', function () {
 
       if (drinks.length === 0) {
           menuContainer.innerHTML = '<p style="color: white; padding: 20px; font-family: Arial;">Коктейлей с такими ингредиентами не найдено.</p>';
-          jokeContainer.innerText = "Sorry pal, never heard of that combo.";
           return;
       }
 
-      //jokeContainer.innerText = "Here's what I can whip up for you!";
+      // Перебираем коктейли из MongoDB
+      // Перебираем коктейли из MongoDB
+drinks.forEach(function (drink) {
+    var ingredientsHTML = '';
+    
+    // Получаем массивы ингредиентов и мер из JSON
+    var ingredients = drink.ingredients || [];
+    var measures = drink.measure || drink.measures || []; // поддерживает и measure, и measures
 
-      // Отрисовываем новые карточки на основе данных из MongoDB
-      drinks.forEach(function (drink) {
-          var ingredientsHTML = '';
-          if (drink.ingredients && Array.isArray(drink.ingredients)) {
-              drink.ingredients.forEach(function(ing) {
-                  ingredientsHTML += `<li>${ing}</li>`;
-              });
-          }
+    ingredients.forEach(function(ing, index) {
+        // Берем соответствующую меру по индексу (если есть)
+        var measure = measures[index] ? measures[index].trim() : '';
+        
+        if (measure) {
+            ingredientsHTML += `<li>${ing} <b style="color: #ccc;">${measure}</b></li>`;
+        } else {
+            ingredientsHTML += `<li>${ing}</li>`;
+        }
+    });
 
-          var card = document.createElement('article');
-          card.className = 'card';
-          card.setAttribute('data-ing', drink.ingredients ? drink.ingredients.join(',') : '');
+    // ПОЧИНКА КАРТИНКИ: добавили drink.imgUrl из вашего JSON
+    var finalImageUrl = drink.imgUrl || drink.imagePath || drink.image || drink.imageUrl || 'https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg';
 
-          card.innerHTML = `
-            <div class="img"><img src="${drink.imagePath || 'img/default.jpg'}" alt="${drink.name}"></div>
-            <div class="strength" style="--s:${drink.strength || '30'}%"></div>
-            <div class="info">
-              <h3>${drink.name}</h3>
-              <ul>
-                ${ingredientsHTML}
-              </ul>
-            </div>
-          `;
-          menuContainer.appendChild(card);
-      });
+    var card = document.createElement('article');
+    card.className = 'card';
+    card.setAttribute('data-ing', ingredients.join(','));
+
+    card.innerHTML = `
+      <div class="img">
+        <img src="${finalImageUrl}" alt="${drink.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image';">
+      </div>
+      <div class="strength" style="--s:${drink.strength || '30'}%"></div>
+      <div class="info">
+        <h3>${drink.name}</h3>
+        <ul>
+          ${ingredientsHTML}
+        </ul>
+      </div>
+    `;
+    menuContainer.appendChild(card);
+});
   })
   .catch(error => {
       console.error('Ошибка связи с бэкендом:', error);
       menuContainer.innerHTML = `<p style="color: #ff8888; padding: 20px; font-family: Arial;">Ошибка сервера: ${error.message}</p>`;
-      jokeContainer.innerText = "Uh oh... looks like the bar's backend server tripped!";
   });
 });
-
-// ---- Jokes: fill this array yourself ----
-  var jokes = [
-    `Коханка одяглася, зачісується біля дзеркала і питає чоловіка:
-— А твоя дружина теж гарна?
-— Та ні, така сама...`,
-`— Мій брат Моня може пробігти 100 метрів за вісім секунд.
-— Брехня! Світовий рекорд у бігу на стометрівку – дев'ять секунд.
-— Ну то й шо?! Моня знає короткий шлях!`,
-`Заходить равлик у бар і каже:
-— Келих пива, будь ласка.
-Бармен бере її і викидає за двері. Минає рік. Равлик знову заповзає до бару:
-— І що це було?!`,
-`– Алло, це лінія допомоги алкоголікам?
-– Так.
-– Підкажіть як зробити мохіто!`,
-`Заходять два дракони у бар. Один каже:
-— Щось тут жарко...
-А другий йому відповідає:
-— А ти писка закрий.`,
-
-
- 
-    // Add the next joke here, separated by a comma. Each new line inside backticks = a new line in the bubble.
-  ];
- 
-  var bell = document.getElementById('bell');
-  var bubble = document.getElementById('bubble');
-  var jokeEl = document.getElementById('joke');
-  var lastJoke = -1;
- 
-  function showJoke() {
-    if (!jokes.length) {                             // array is empty: show a hint so it is clear the bubble works
-      jokeEl.textContent = 'No jokes yet. Add them to the "jokes" array in the script.';
-      bubble.classList.add('show');
-      return;
-    }
-    var i;
-    do { i = Math.floor(Math.random() * jokes.length); }
-    while (jokes.length > 1 && i === lastJoke);      // never repeat the same joke twice in a row
-    lastJoke = i;
- 
-    bubble.classList.remove('show');
-    void bubble.offsetWidth;                         // restart the pop animation
-    jokeEl.textContent = jokes[i];
-    bubble.classList.add('show');
-  }
- 
-  bell.addEventListener('click', function () {
-    bell.classList.remove('ding');
-    void bell.offsetWidth;
-    bell.classList.add('ding');
- 
-    showJoke();
- 
-    var chosen = Array.from(document.querySelectorAll('.item.selected'))
-                      .map(function (el) { return el.dataset.name; });
-    document.querySelectorAll('.card').forEach(function (card) {
-      var ing = card.dataset.ing.split(',');
-      card.classList.toggle('hidden', !chosen.every(function (c) { return ing.indexOf(c) !== -1; }));
-    });
-  });
-
 </script>
+
 
 </body>
 </html>
