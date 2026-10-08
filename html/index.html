@@ -53,6 +53,10 @@
       <button class="bell" id="bell" aria-label="Search cocktails">
         <img src="../imgs/bell.png" alt="">
       </button>
+            <div class="bubble" id="bubble" aria-live="polite">
+        <p id="joke"></p>
+      </div>
+
       <div class="bartender">
         <img src="../imgs/bartender.png" alt="">
       </div>
@@ -124,11 +128,43 @@
     el.addEventListener('click', function () { el.classList.toggle('selected'); });
   });
  
+  // ---- Jokes: fill this array yourself ----
+  var jokes = [
+    `Коханка одяглася, зачісується біля дзеркала і питає чоловіка:
+— А твоя дружина теж гарна?
+— Та ні, така сама...`,
+ 
+    // Add the next joke here, separated by a comma. Each new line inside backticks = a new line in the bubble.
+  ];
+ 
   var bell = document.getElementById('bell');
+  var bubble = document.getElementById('bubble');
+  var jokeEl = document.getElementById('joke');
+  var lastJoke = -1;
+ 
+  function showJoke() {
+    if (!jokes.length) {                             // array is empty: show a hint so it is clear the bubble works
+      jokeEl.textContent = 'No jokes yet. Add them to the "jokes" array in the script.';
+      bubble.classList.add('show');
+      return;
+    }
+    var i;
+    do { i = Math.floor(Math.random() * jokes.length); }
+    while (jokes.length > 1 && i === lastJoke);      // never repeat the same joke twice in a row
+    lastJoke = i;
+ 
+    bubble.classList.remove('show');
+    void bubble.offsetWidth;                         // restart the pop animation
+    jokeEl.textContent = jokes[i];
+    bubble.classList.add('show');
+  }
+ 
   bell.addEventListener('click', function () {
     bell.classList.remove('ding');
     void bell.offsetWidth;
     bell.classList.add('ding');
+ 
+    showJoke();
  
     var chosen = Array.from(document.querySelectorAll('.item.selected'))
                       .map(function (el) { return el.dataset.name; });
@@ -138,6 +174,8 @@
     });
   });
 </script>
+
+
 
 </body>
 </html>
