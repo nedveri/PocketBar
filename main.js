@@ -10,13 +10,15 @@ function createWindow(){
          height: 9*50,
             minWidth: 400,
             minHeight: 300,
-            frame: false,
-            icon: path.join(__dirname, 'icon.ico'),
+            titleBarStyle: 'hidden',
+            ...(process.platform !== 'darwin' ? { 
+                titleBarOverlay: true,
+                icon: path.join(__dirname, 'icon.ico')
+            } : {}),
          webPreferences: {
              nodeIntegration: true,
              contextIsolation: false 
-            },
-            transparent: true 
+         }
     });
 
     win.loadURL(url.format({
