@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Electron\\PocketBar\\backend\\backend.csproj": {}
+    "C:\\Electron\\PocketBar\\Backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Electron\\PocketBar\\backend\\backend.csproj": {
+    "C:\\Electron\\PocketBar\\Backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Electron\\PocketBar\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Electron\\PocketBar\\Backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Electron\\PocketBar\\backend\\backend.csproj",
+        "projectPath": "C:\\Electron\\PocketBar\\Backend\\backend.csproj",
         "packagesPath": "C:\\Users\\kirri\\.nuget\\packages\\",
-        "outputPath": "C:\\Electron\\PocketBar\\backend\\obj\\",
+        "outputPath": "C:\\Electron\\PocketBar\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

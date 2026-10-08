@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xg9aRPhwfyE=",
+  "dgSpecHash": "ptjSK5c9lo0=",
   "success": true,
-  "projectFilePath": "C:\\Electron\\PocketBar\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Electron\\PocketBar\\Backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kirri\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\kirri\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",

@@ -1,7 +1,7 @@
 {
   "name": "pocketbar",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pocket Bar Desktop App",
   "homepage": "https://github.com/nedveri/PocketBar#readme",
   "bugs": {
     "url": "https://github.com/nedveri/PocketBar/issues"
@@ -15,9 +15,37 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:backend": "dotnet publish ./Backend -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true -o ./resources/backend",
+    "build:dir": "npm run build:backend && electron-builder --dir",
+    "dist": "npm run build:backend && electron-builder"
   },
   "devDependencies": {
-    "electron": "^44.7.0"
+    "electron": "^44.7.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.pocketbar.app",
+    "productName": "PocketBar",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "**/*",
+      "!resources/backend/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
   }
 }
